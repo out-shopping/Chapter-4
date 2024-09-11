@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task List</title>
+</head>
+<body>
+    <header>
+        <h1>Task List</h1>
+    </header>
+
+    <main id="taskList">
+        <section id="inputSection">
+            <h2>Add Task</h2>
+            <form id="addTaskForm">
+                <label for="task_name">Task:</label>
+                <input type="text" id="task_name" required>
+                <button type="submit">Add Task</button>
+            </form>
+        </section>
+
+        <section id="listSection">
+            <h2>tasks</h2>
+            <ul id="people"></ul>
+        </section>
+    </main>
+
+    <script>
+    let people = [];
+
+    function addTask(event) {
+        event.preventDefault();
+        const peopleName = document.getElementById('task_name');
+        const task_name = peopleName.value.trim();
+
+        if (task_name === '') {
+            alert('Please enter a name!');
+            return;
+        }
+
+        // Create new user object
+        const new_person = {
+            id: Date.now(), // Unique ID based on timestamp
+            name: task_name
+        };
+
+    }
+
+    // Function to delete a user
+    function deleteUser(userId) {
+        people = people.filter(user => user.id !== userId);
+        create_list();
+    }
+
+    // Function to render the user list
+    function create_list() {
+        const taskList = document.getElementById('people');
+        taskList.innerHTML = '';
+
+        people.forEach(user => {
+            // Create list item for each user
+            const list_item = document.createElement('li');
+            list_item.textContent = user.name;
+
+            // Create delete button for each user item
+            const deleteButton = document.createElement('button');
+            deleteButton.textContent = 'Delete';
+
+            deleteButton.addEventListener('click', () => deleteUser(user.id));
+            list_item.appendChild(deleteButton);
+
+            taskList.appendChild(list_item);
+        });
+    }
+
+    </script>
+</body>
+</html>
